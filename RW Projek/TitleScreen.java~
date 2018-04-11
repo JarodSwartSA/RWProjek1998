@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TitleScreen //Hello
+public class TitleScreen 
 {
   private static boolean changeScreen = false;
   public TitleScreen()
