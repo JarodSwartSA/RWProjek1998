@@ -3,19 +3,19 @@ public class Troop
 {
   private int troopSize,form,arraySize, enemyMoveDelay;
   private double enemySize;
-  private Enemy[] troop;
+  private Enemy[] troop; //The  array holding all the enemies in a troop
   private int currentDirection = 1;
   private static int delayMovementMax = 5, delayMovementCount = 0; //The enemies were moving once every refresh beat, and that was too fast. So now they move only once every *delayMovementMax* refreshes. 
   //*delayMovementCount* holds how many times it has waited
   
   public Troop(int troopSize, double enemySize, Color troopColor, int enemyMoveDelay, int form)
   {
-    Enemy.setEnemySize(enemySize);
+    Enemy.setEnemySize(enemySize); //Assuming all the enemies in a troop are the same colour, and size, there are static variables in Enemy that control this
     Enemy.setEnemyColor(troopColor);
     this.enemyMoveDelay = enemyMoveDelay;
     this.troopSize = troopSize;
     this.enemySize = enemySize;
-    if(form == 1) //Forming different troop shapes - TO DO
+    if(form == 1) //Forming different troop shapes - TO DO //I was thinking we can maybe make other types of troops that are in different forms, but we can do that later
     {
       arraySize = troopSize*troopSize;
       troop = new Enemy[arraySize];
@@ -53,8 +53,8 @@ public class Troop
         {
           if(troop[i] != null) //If there is an enemy in that position
             troop[i].setYPos(troop[i].getYPos() - Math.abs(currentDirection*2*enemySize)); //Move all the enemies down
-         // if(troop[i].touchHeroFloor())
-          //  touchFloorHero = true;
+          if(troop[i] != null && troop[i].touchHeroFloor())
+            touchFloorHero = true;
         }
         while(((troop[getLeftMostEnemy()].getXPos() - enemySize) <= GameScreen.getMinX()) || ((troop[getRightMostEnemy()].getXPos() + enemySize) >= GameScreen.getMaxX())) //Same boolean statements as above
         {
@@ -65,8 +65,8 @@ public class Troop
           {
             if(troop[i] != null)
               troop[i].setXPos(troop[i].getXPos() + currentDirection);
-            //if(troop[i].touchHeroFloor())
-            //touchFloorHero = true;
+            if(troop[i] != null && troop[i].touchHeroFloor())
+            touchFloorHero = true;
           }
         }
       }
@@ -76,16 +76,17 @@ public class Troop
         {
           if(troop[i] != null)
             troop[i].setXPos(troop[i].getXPos() + currentDirection);
-          //if(troop[i].touchHeroFloor())
-            //touchFloorHero = true;
+          if(troop[i] != null && troop[i].touchHeroFloor())
+            touchFloorHero = true;
         }
       }
     }
     return touchFloorHero;
   }
-  public void setSquareTroop(double beginX)
-  {
-    double x, y;
+  public void setSquareTroop(double beginX) //One type of troop shape
+  { 
+    //Basically just draws all the enemies in the troop array, organising them in a square
+    double x, y; 
     double startY = GameScreen.getMaxY();
     int count = 0;
     for(int i = 0; i < troopSize; i++)

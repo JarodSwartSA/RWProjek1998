@@ -88,9 +88,10 @@ public class GameScreen
     hero.drawSight(); //GT hero class, drawSight method
     drawEnemies(); //GT drawEnemies method
     drawBullets(); //GT drawBullet method
-    StdDraw.pause(WAIT_TIME);
-    StdDraw.show();
+    StdDraw.pause(WAIT_TIME); //Refresh rate
+    StdDraw.show(); //Show the newly drawn objects
     StdDraw.clear();
+    //Clear the screen, and the start the whole cycle all over again
   }
   public static void drawEnemies()
   {
@@ -98,8 +99,13 @@ public class GameScreen
     {
       initEnemies(); //If the drawTroop method returns false, then a new troop of enemies is made and drawn
     }
-    else
-    troop.moveTroop(); //If the troop exists, move the troop. GT Troop class, moveTroop method
+    else if (troop.moveTroop()) //If the troop exists, move the troop. GT Troop class, moveTroop method
+    {
+      JOptionPane.showMessageDialog(null,"Game Over"); //If the method returns true, it measn the troop has reached the floor. Begin the game again
+      StdDraw.pause(1500);
+      init();
+    }
+      
   }
   
   public static void drawBullets()
@@ -107,27 +113,28 @@ public class GameScreen
     Bullet[] bul = Bullet.getBulletArray(); //Gets the current bullet array from the Bullet class
     for(int i = 0; i < Bullet.getVisibleBullets(); i++) //GT Bullet class, getVisibleBullets method
     {
-      if(bul[i] != null)
+      if(bul[i] != null)// If the bullet in this position exists
       {
-        bul[i].refreshBullet();
-        Bullet.remakeArray();
-        if(bul[i] != null)
-          bul[i].drawBullet();
-        if(bul[i] != null && killEnemies(bul[i].getXPos(), bul[i].getYPos()))
+        bul[i].refreshBullet(); //GT Bullet class, refreshBullet method
+        Bullet.remakeArray(); //Remakes array so that all the null positions are at the end
+        if(bul[i] != null) 
+          bul[i].drawBullet(); 
+        if(bul[i] != null && killEnemies(bul[i].getXPos(), bul[i].getYPos())) //GT killEnemies method 
         {
-          Bullet.removeBullet(i);
+          Bullet.removeBullet(i); //Now that it has killed an enemy, the bullet must be destroyed
         }
       }   
     }
   }
   public static boolean killEnemies(double x, double y)
-  {
+  { 
+    //This is a boolean method, that returns false if it has not killed any enemies
     boolean output = false;
     for(int i = 0; i < enemyArray.length; i++ )
     {
-      if(enemyArray[i] != null && enemyArray[i].testKilled(x,y))
+      if(enemyArray[i] != null && enemyArray[i].testKilled(x,y)) //GT testKilled method, Enemy class
       {
-        troop.killEnemy(i);
+        troop.killEnemy(i); //GT kill enemy method, Troop class. Sets enemy to null
         output = true;
       }
     }

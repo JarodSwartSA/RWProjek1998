@@ -10,7 +10,7 @@ public class Bullet
   
   public Bullet(int bulletNum) //Sets the initla position of the bullet
   {
-    xpos = GameScreen.getHero().getSightX();
+    xpos = GameScreen.getHero().getSightX(); // The bullet will be shot from where the sight is
     ypos = GameScreen.getHero().getSightY();
     velocity = 30;
     this.bulletNum = bulletNum; //The number of the bullet in the array
@@ -47,16 +47,16 @@ public class Bullet
   }
   public void refreshBullet()
   {
-    if(!pastBoundary())
+    if(!pastBoundary()) // GT pastBoundary method
     {
-      ypos = ypos + calcDisplacement()* Math.sin(Math.toRadians(deg));
+      ypos = ypos + calcDisplacement()* Math.sin(Math.toRadians(deg)); //Using trig, just increases the x and y coordinates of the bullet
       xpos = xpos + calcDisplacement()* Math.cos(Math.toRadians(deg));
       
     }
-    else
+    else //If the bullet is past the edges of the screen
     {
-      bulletArray[bulletNum] = null;
-      bulletsVisible--;
+      bulletArray[bulletNum] = null; //Destroy the bullet
+      bulletsVisible--; //There is one less bullet on the screen
     }
   }
   public int getNumVisibleBullets()
@@ -67,27 +67,26 @@ public class Bullet
   {
     return velocity*WAIT_TIME * Math.pow(10,-3);
   }
-  public boolean pastBoundary()
+  public boolean pastBoundary() // Tests to see if the bullet has passed the left, right or top edges on the screen
   {
     return ((GameScreen.getMaxY() - ypos) <= 0 || (xpos < GameScreen.getMinX() || xpos > GameScreen.getMaxX()));
   }
-  public void drawBullet()
+  public void drawBullet() //Draws the bullet at its x and y coords
   {
     StdDraw.setPenColor(StdDraw.RED);
     StdDraw.filledCircle(xpos, ypos, bulletRadius);
-    StdDraw.setPenColor();
   }
   public static void addBullet()
   {
-    if(bulletsVisible + 1 <= MAX_BULLETS)
+    if(bulletsVisible + 1 <= MAX_BULLETS) //If another bullet can be shot without going over the limit
     {
-      bulletsVisible++;
-      bulletArray[bulletsVisible-1] = new Bullet(bulletsVisible-1);
+      bulletsVisible++; 
+      bulletArray[bulletsVisible-1] = new Bullet(bulletsVisible-1); //Adds a new bullet to the array
     }
     else
       System.out.println("No more bullets available");
   }
-  public static void remakeArray()
+  public static void remakeArray() //Sorts the array so that all null places are at the end
   {
     Bullet temp;
     for(int i = 0; i < MAX_BULLETS; i++)

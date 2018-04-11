@@ -5,8 +5,8 @@ import java.awt.event.*;
 public class ScreenListeners 
 {
   private static boolean titleScreen, gameScreen; //Used to specify on which screen the program is
-  private static final int WAIT_TIME = GameScreen.getWaitTime(); 
-  private static int bulletDelayerCount = 0;
+  private static final int WAIT_TIME = GameScreen.getWaitTime();  
+  private static int bulletDelayerCount = 0; //The bullets were shooting too fast, so now it shoots once every *keyDelayerMax* times the Space button is pressed
   private static final int keyDelayerMax = 3;
     
   public static void setTitle() //Now showing the title screen, and listens to the TitleScreen key commands
@@ -60,19 +60,19 @@ public class ScreenListeners
     }
     if(StdDraw.isKeyPressed(KeyEvent.VK_SPACE))
     {
-      bulletDelayerCount++;
+      bulletDelayerCount++; //GT above variables
       if(bulletDelayerCount == keyDelayerMax)
       {
-        Bullet.addBullet();
+        Bullet.addBullet(); //GT Bulelt class. addBullet method
         bulletDelayerCount = 0;
       }
     }
     if(StdDraw.isKeyPressed(KeyEvent.VK_A))
     {
-      if(GameScreen.getHero().getSightDeg() <= 180)
-        GameScreen.getHero().setSightDeg(GameScreen.getHero().getSightDeg() + 2);
+      if(GameScreen.getHero().getSightDeg() <= 180) //Makes the sight move around the hero using trig
+        GameScreen.getHero().setSightDeg(GameScreen.getHero().getSightDeg() + 2); //GT setSightDeg method in Hero class
     }
-    if(StdDraw.isKeyPressed(KeyEvent.VK_D))
+    if(StdDraw.isKeyPressed(KeyEvent.VK_D)) //Same as above
     {
       if(GameScreen.getHero().getSightDeg() >= 0)
         GameScreen.getHero().setSightDeg(GameScreen.getHero().getSightDeg() - 2);
