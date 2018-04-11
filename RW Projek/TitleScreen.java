@@ -2,19 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TitleScreen //Hello
+public class TitleScreen //Start here
 {
-  private static boolean changeScreen = false;
+  private static boolean changeScreen = false; //Variable used to specify which screen StdDraw is showing, there were issues with the ScreenListeners class otherwise
+  
   public TitleScreen()
   {
-    ScreenListeners.setTitle();
-    init();
-    while(!changeScreen)
+    ScreenListeners.setTitle();  //Go-To (From now on this is GT) ScreenListeners class method setTitle()
+    init(); //Gt init method
+    while(!changeScreen) //This loop runs forever until the user presses enter, then it will go to the Game screen
     {
-      ScreenListeners.listen(); 
+      ScreenListeners.listen(); //GT ScreenListeners listen class
     }
   }
-  static void init()
+  static void init() //Sets the titles and so for the title screen
   {
     StdDraw.setScale(-10,10);
     StdDraw.setPenColor(StdDraw.LIGHT_GRAY);
@@ -29,10 +30,11 @@ public class TitleScreen //Hello
   }
   public static void setChangeScreen()
   {
-    changeScreen = true;
+    changeScreen = true; //Now the while loop will end
   }
+  
   public static void main(String [] args)
   {
-    TitleScreen ts = new TitleScreen();
+    TitleScreen ts = new TitleScreen(); 
   }
 }

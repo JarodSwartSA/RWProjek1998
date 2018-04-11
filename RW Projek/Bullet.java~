@@ -2,20 +2,20 @@ public class Bullet
 {
   private double xpos, ypos, acceleration, velocity, deg;
   private int bulletNum;
-  private static final double bulletRadius = 0.5; 
-  private static final int MAX_BULLETS = 10; //Max amount of bullets that can be seen on the screen
+  private static final double bulletRadius = 0.5;
+  private static final int MAX_BULLETS = 10;
   private static final int WAIT_TIME = GameScreen.getWaitTime();
-  private static Bullet[] bulletArray = new Bullet[MAX_BULLETS]; //The Bullets that can currently be seen
-  private static int bulletsVisible = 0; //The number of bullets currently visible
+  private static Bullet[] bulletArray = new Bullet[MAX_BULLETS];
+  private static int bulletsVisible = 0;
   
-  public Bullet(int bulletNum) //Sets the initla position of the bullet
+  public Bullet(int bulletNum)
   {
     xpos = GameScreen.getHero().getSightX();
     ypos = GameScreen.getHero().getSightY();
     velocity = 30;
-    this.bulletNum = bulletNum; //The number of the bullet in the array
+    this.bulletNum = bulletNum;
     drawBullet(); 
-    deg = GameScreen.getHero().getSightDeg(); //The angle the sight makes to the horizontal, measured from the centre of the hero
+    deg = GameScreen.getHero().getSightDeg();
   }
   public void setYPos(double y)
   {
